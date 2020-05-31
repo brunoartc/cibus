@@ -19,4 +19,4 @@ default_app = firebase_admin.initialize_app(cred, {"databaseURL": "https://cibus
 
 
 ref = db.reference(f"producer/{user}/areas/{area}/Rendimento(ha)")
-aa = ref.set(f"{ha} kg/ha")
+ref.set(f"{ha} kg/ha")
