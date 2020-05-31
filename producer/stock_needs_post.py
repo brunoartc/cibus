@@ -10,7 +10,6 @@ def handler_name(event, context):
     usuario = event["body"]["usuario"]
     selling = int(event["body"]["selling"])
     food = event["body"]["food"]
-    area = event["body"]["area"]
     try:
         cred = credentials.Certificate("./cibus-2738b-firebase-adminsdk-mgedu-04c7819042.json")
         firebase_admin.initialize_app(cred, {"databaseURL": "https://cibus-2738b.firebaseio.com"})
