@@ -15,19 +15,33 @@ class Item(BaseModel):
     kit: str
     recipe: str
 
-class NutriInfo(BaseModel):
+class UserGet(BaseModel):
     user: str
+
+class UserPost(BaseModel):
+    user: str
+    nutricional_info: str
+    number: int
+
+class RecipePost(BaseModel):
+    recipe: str
+
+
+
+class StockNeedings(BaseModel):
+    user: str
+    kit: str
     
 
 @app.post("/client/home/get")
-def home_get_fast(item: Item):
+def home_get_fast(item: UserGet):
     event={"body":"{\"usuario\":\""+item.user+"\", \"nutricional_info\":\""+item.nutricional_info+"\", \"number\":\""+item.number+"\", \"kit_name\":\""+item.kit+"\", \"recipe\":\""+item.recipe+"\"}"}
     return home_get.handler_name(copy.deepcopy(event), context = None)
 
 
 
 @app.post("/client/home/post") 
-def home_post_fast(item: Item): #change
+def home_post_fast(item: UserPost): #change
     event={"body":"{\"usuario\":\""+item.user+"\", \"nutricional_info\":\""+item.nutricional_info+"\", \"number\":\""+item.number+"\", \"kit_name\":\""+item.kit+"\", \"recipe\":\""+item.recipe+"\"}"}
     return home_post.handler_name(copy.deepcopy(event), context = None)
 
@@ -44,7 +58,7 @@ def kit_get_fast(item: Item): #change
     return kits_get.handler_name(copy.deepcopy(event), context = None)
 
 @app.post("/client/recipe/post") 
-def recipe_post_fast(item: Item): #change
+def recipe_post_fast(item: RecipePost): #change
     event={"body":"{\"usuario\":\""+item.user+"\", \"nutricional_info\":\""+item.nutricional_info+"\", \"number\":\""+item.number+"\", \"kit_name\":\""+item.kit+"\", \"recipe\":\""+item.recipe+"\"}"}
     return recipe_post.handler_name(copy.deepcopy(event), context = None)
 
