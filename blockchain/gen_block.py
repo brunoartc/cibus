@@ -11,6 +11,7 @@ usuario = "brunoartc"
 msg = "tal produto aconteceu tal coisa"
 lote = "0000002"
 assinatura = "ISSO FOI ASSINADO POR MIM MESMO"
+from_products_lotes = []
 
 
 cred = credentials.Certificate("./cibus-2738b-firebase-adminsdk-mgedu-04c7819042.json")
@@ -25,7 +26,7 @@ except KeyError as e:
 print("AAAAAA", last_hash)
 ref = db.reference('blockchain')
 
-aaa = msg + usuario + lote + assinatura + last_hash
+aaa = msg + usuario + lote + assinatura + last_hash + from_products_lotes
 ref.child(hashlib.sha256(aaa.encode("UTF-8")).hexdigest()).set(aaa)
 
 ref = db.reference('lotes')
