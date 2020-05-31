@@ -8,8 +8,11 @@ kit_name = "kit-foo"
 def handler_name(event, context): 
     event["body"] = json.loads(event["body"])
     kit_name = event["body"]["kit_name"]
-    cred = credentials.Certificate("./cibus-2738b-firebase-adminsdk-mgedu-04c7819042.json")
-    firebase_admin.initialize_app(cred, {"databaseURL": "https://cibus-2738b.firebaseio.com"})
+    try:
+        cred = credentials.Certificate("./cibus-2738b-firebase-adminsdk-mgedu-04c7819042.json")
+        firebase_admin.initialize_app(cred, {"databaseURL": "https://cibus-2738b.firebaseio.com"})
+    except :
+        pass
 
 
 

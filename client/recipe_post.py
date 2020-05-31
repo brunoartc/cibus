@@ -9,8 +9,11 @@ recipe = "bananada"
 def handler_name(event, context):
     event["body"] = json.loads(event["body"])
     recipe = event["body"]["recipe"]
-    cred = credentials.Certificate("./cibus-2738b-firebase-adminsdk-mgedu-04c7819042.json")
-    firebase_admin.initialize_app(cred, {"databaseURL": "https://cibus-2738b.firebaseio.com"})
+    try:
+        cred = credentials.Certificate("./cibus-2738b-firebase-adminsdk-mgedu-04c7819042.json")
+        firebase_admin.initialize_app(cred, {"databaseURL": "https://cibus-2738b.firebaseio.com"})
+    except :
+        pass
 
 
 
