@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 
 from client import home_get, home_post, kit_post, kits_get, recipe_post, recipies_get, stock_needings
-from producer import map_get_areas, map_get_variables, stock_get, stock_needs_get, stock_needs_post
+from producer import map_get_areas, map_get_variables, stock_get, stock_needs_get, stock_needs_post, calculator_post
 import copy
 
 
@@ -48,12 +48,24 @@ class StockNeedsPost(BaseModel):
     food: str
     selling: int
 
+class Profit(BaseModel):
+    user: str
+    wheight: int
+    sample_area: int
+    area: str
+
 # Producer
     
 @app.post("/producer/map_areas")
 def map_get_areas_fast(item: MapAreasGet):
     event_andre={"body":"{\"usuario\":\""+item.user+"\"}"}
     return map_get_areas.handler_name(copy.deepcopy(event_andre), context = None)
+
+
+@app.post("/producer/calculator")
+def calculator_post_fast(item: Profit):
+    event_andre={"body":"{\"usuario\":\""+item.user+"\", \"wheight\":\""+str(item.wheight)+"\", \"sample_area\":\""+str(item.sample_area)+"\", \"area\":\""+str(item.area)+"\"}"}
+    return calculator_post.handler_name(copy.deepcopy(event_andre), context = None)
 
 
 @app.post("/producer/map_variables")
