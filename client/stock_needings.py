@@ -4,6 +4,7 @@ from firebase_admin import db
 from datetime import date
 
 kit_name = "kit-foo"
+usuario = "brunoartc"
 
 cred = credentials.Certificate("./cibus-2738b-firebase-adminsdk-mgedu-04c7819042.json")
 default_app = firebase_admin.initialize_app(cred, {"databaseURL": "https://cibus-2738b.firebaseio.com"})
@@ -15,6 +16,11 @@ default_app = firebase_admin.initialize_app(cred, {"databaseURL": "https://cibus
 
 ref = db.reference('kit')
 aa = ref.get("/{kit_name}")[0][kit_name]['itens']
+
+
+ref = db.reference('orders')
+
+ref.push({"user" : usuario, "kit": kit_name, "date": date.today().isocalendar()})
 
 
 ref = db.reference('stock_needs')
