@@ -29,7 +29,7 @@ def handler_name(event, context):
 
 
 
-    ref.child(f"stats/{usuario}/week/{date.today().isocalendar()[1]}/{nutricional_info}").set(number)
+    ref.child(f"stats/{usuario}/normal/{nutricional_info}").set(number)
 
     return {
         'statusCode': 200,
