@@ -22,5 +22,5 @@ def handler_name(event, context):
 
     return {
         'statusCode': 200,
-        'body': aa
+        'body': json.dumps(aa)
     }
