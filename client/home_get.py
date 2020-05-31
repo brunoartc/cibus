@@ -2,25 +2,38 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 from datetime import date
+import json
 
 usuario = "brunoartc"
 
-cred = credentials.Certificate("./cibus-2738b-firebase-adminsdk-mgedu-04c7819042.json")
-default_app = firebase_admin.initialize_app(cred, {"databaseURL": "https://cibus-2738b.firebaseio.com"})
+
+def handler_name(event, context): 
+    event["body"] = json.loads(event["body"])
+    usuario = event["body"]["usuario"]
+
+    cred = credentials.Certificate("./cibus-2738b-firebase-adminsdk-mgedu-04c7819042.json")
+    firebase_admin.initialize_app(cred, {"databaseURL": "https://cibus-2738b.firebaseio.com"})
 
 
 
-ref = db.reference('consumer')
+    ref = db.reference('consumer')
 
-sv_normal = ref.get(f"stats/{usuario}/normal")
-sv_normal = sv_normal[0]["stats"][usuario]["normal"]
-print(sv_normal)
+    sv_normal = ref.get(f"stats/{usuario}/normal")
+    sv_normal = sv_normal[0]["stats"][usuario]["normal"]
+    print(sv_normal)
 
-sv = ref.get(f"stats/{usuario}/week/{date.today().isocalendar()[1]}")
+    sv = ref.get(f"stats/{usuario}/week/{date.today().isocalendar()[1]}")
 
-sv = sv[0]["stats"][usuario]["week"][str(date.today().isocalendar()[1])]
-print([{i:sv[i]/sv_normal[i]} for i in dict(sv_normal)])
+    sv = sv[0]["stats"][usuario]["week"][str(date.today().isocalendar()[1])]
+    print([{i:sv[i]/sv_normal[i]} for i in dict(sv_normal)])
 
+
+
+
+    return {
+        'statusCode': 200,
+        'body': json.dumps(event)
+    }
 
 
 
